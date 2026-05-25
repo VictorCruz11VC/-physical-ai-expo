@@ -1,0 +1,12 @@
+# Physical AI Expo — robots.txt
+# https://thephysicalaiexpo.com
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://thephysicalaiexpo.com/sitemap.xml
+
+# Block any irrelevant paths (none currently, single page site)
+# Disallow: /private/
