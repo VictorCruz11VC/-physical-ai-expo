@@ -345,6 +345,132 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.04);paddi
 .hsn{font-size:54px;}
 .bg,.bt{font-size:12px;padding:11px 24px;}
 
+
+/* ═══════════════════════════════════
+   MOBILE RESPONSIVE
+   ═══════════════════════════════════ */
+
+/* ── HAMBURGER BUTTON ── */
+.nav-hamburger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;
+}
+.nav-hamburger span{
+  display:block;width:24px;height:2px;
+  background:var(--white);transition:all 0.3s;
+}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* ── MOBILE NAV DRAWER ── */
+.nav-drawer{
+  display:none;
+  position:fixed;top:68px;left:0;right:0;bottom:0;
+  background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);
+  z-index:800;flex-direction:column;
+  padding:32px 36px;gap:0;
+  overflow-y:auto;
+}
+.nav-drawer.open{display:flex;}
+.nav-drawer .nav-links{
+  flex-direction:column;gap:0;margin-bottom:32px;
+}
+.nav-drawer .nav-links li{
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-drawer .nav-links a{
+  display:block;padding:18px 0;font-size:14px;
+  letter-spacing:0.12em;color:var(--off-white);
+}
+.nav-drawer .nav-links a:hover{color:var(--teal);}
+.nav-drawer .nav-cta{
+  flex-direction:column;gap:12px;
+}
+.nav-drawer .nav-cta .bg,
+.nav-drawer .nav-cta .bt{
+  text-align:center;padding:14px 24px;font-size:13px;width:100%;
+}
+
+@media(max-width:900px){
+  /* Hide desktop nav links and buttons */
+  nav .nav-links{display:none;}
+  nav .nav-cta{display:none;}
+  /* Show hamburger */
+  .nav-hamburger{display:flex;}
+
+  /* HERO */
+  .hero{height:100svh;min-height:600px;}
+  .hbody{padding:0 24px 100px;max-width:100%;}
+  .hh1{font-size:clamp(44px,10vw,72px);}
+  .hp{font-size:16px;max-width:100%;}
+  .hbtns{flex-direction:column;gap:10px;}
+  .hbtns a{text-align:center;padding:14px 24px;}
+  .hstats{right:20px;bottom:96px;}
+  .hsn{font-size:36px;}
+  .hsl{font-size:9px;}
+  .hstat{padding:12px 0 12px 18px;}
+  .hstrip{padding:0 24px;gap:16px;overflow-x:auto;}
+  .hsi{white-space:nowrap;flex-shrink:0;}
+
+  /* BOTTOM BAR */
+  .hbar{flex-wrap:wrap;}
+  .hbi{padding:12px 0 12px 24px;flex:1 1 50%;min-width:0;}
+  .hbv{font-size:13px;}
+
+  /* SECTION INNER */
+  .si{padding:64px 24px;}
+
+  /* SIGNAL / PROMETHEUS */
+  .sig-g{grid-template-columns:1fr;gap:40px;}
+
+  /* OVERVIEW GRID */
+  .sg{grid-template-columns:repeat(2,1fr);}
+
+  /* DEMO TOP */
+  .demo-top{grid-template-columns:1fr;gap:32px;}
+  .dg{font-size:80px;}
+  .dcg{grid-template-columns:repeat(2,1fr);}
+
+  /* TRACKS */
+  .trg{grid-template-columns:1fr;}
+
+  /* SPEAKERS */
+  .spk-g{grid-template-columns:repeat(2,1fr);}
+
+  /* ADVISORY BOARDS */
+  .adv-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* AUDIENCE */
+  .aud-g{grid-template-columns:1fr;gap:40px;}
+  .aud-st{position:static;}
+  .ar{grid-template-columns:1fr 44px 80px;gap:10px;padding:12px 14px;}
+
+  /* REGISTER */
+  .reg{padding:72px 24px;}
+  .rpg{grid-template-columns:1fr;}
+
+  /* FOOTER */
+  footer{padding:36px 24px;}
+  .fi{grid-template-columns:1fr;gap:24px;}
+  .flinks{flex-wrap:wrap;gap:16px;justify-content:flex-start;}
+  .fr{text-align:left;}
+
+  /* MANUFACTURING MARQUEE */
+  .mfg-n{font-size:20px;}
+  .mfg-item{height:56px;padding:0 28px;}
+}
+
+@media(max-width:480px){
+  .hh1{font-size:clamp(38px,11vw,58px);}
+  .sh2{font-size:clamp(40px,10vw,60px);}
+  .sg{grid-template-columns:1fr;}
+  .spk-g{grid-template-columns:1fr;}
+  .adv-grid{grid-template-columns:1fr;}
+  .hstats{display:none;}
+  .hbar{display:none;}
+}
+
 </style>
 
 <!-- Structured Data / Schema.org -->
@@ -386,6 +512,23 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.04);paddi
     "audienceType": "Investors, Founders, Enterprise Buyers, Researchers, Policymakers"
   }
 }
+
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const drawer = document.getElementById('nav-drawer');
+function closeDrawer(){
+  hamburger.classList.remove('open');
+  drawer.classList.remove('open');
+  document.body.style.overflow='';
+}
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  drawer.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+});
+// Close on scroll
+window.addEventListener('scroll',()=>{ if(drawer.classList.contains('open')) closeDrawer(); },{passive:true});
+
 </script>
 </head>
 <body>
@@ -415,7 +558,27 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.04);paddi
     <a href="#register" class="bg">Enquire</a>
     <a href="#register" class="bt">Register &rarr;</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="nav-drawer">
+  <ul class="nav-links">
+    <li><a href="#demo" onclick="closeDrawer()">Demo Floor</a></li>
+    <li><a href="#programme" onclick="closeDrawer()">Programme</a></li>
+    <li><a href="#speakers" onclick="closeDrawer()">Speakers</a></li>
+    <li><a href="#vc-advisory" onclick="closeDrawer()">VC Advisory</a></li>
+    <li><a href="#auto-advisory" onclick="closeDrawer()">Automation Leaders</a></li>
+    <li><a href="#audience" onclick="closeDrawer()">Audience</a></li>
+    <li><a href="#register" onclick="closeDrawer()">Register</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#register" class="bg" onclick="closeDrawer()">Enquire</a>
+    <a href="#register" class="bt" onclick="closeDrawer()">Register &rarr;</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -744,6 +907,23 @@ window.addEventListener('scroll', () => {
   const img = document.querySelector('.hero-img');
   if(img) img.style.opacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.7));
 });
+
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const drawer = document.getElementById('nav-drawer');
+function closeDrawer(){
+  hamburger.classList.remove('open');
+  drawer.classList.remove('open');
+  document.body.style.overflow='';
+}
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  drawer.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+});
+// Close on scroll
+window.addEventListener('scroll',()=>{ if(drawer.classList.contains('open')) closeDrawer(); },{passive:true});
+
 </script>
 </body>
 </html>
